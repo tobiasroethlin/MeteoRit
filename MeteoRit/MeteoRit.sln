@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeteoRitServer", "MeteoRitS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeteoRitRichClient", "MeteoRitRichClient\MeteoRitRichClient.csproj", "{501CBA21-B33A-40CB-A227-F026B4FFEDC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeteoRitBoard", "MeteoRitBoard\MeteoRitBoard.csproj", "{F161B533-8EFA-4F7A-BE97-1CF54CF0A0D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,12 @@ Global
 		{501CBA21-B33A-40CB-A227-F026B4FFEDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{501CBA21-B33A-40CB-A227-F026B4FFEDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{501CBA21-B33A-40CB-A227-F026B4FFEDC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F161B533-8EFA-4F7A-BE97-1CF54CF0A0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F161B533-8EFA-4F7A-BE97-1CF54CF0A0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F161B533-8EFA-4F7A-BE97-1CF54CF0A0D7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F161B533-8EFA-4F7A-BE97-1CF54CF0A0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F161B533-8EFA-4F7A-BE97-1CF54CF0A0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F161B533-8EFA-4F7A-BE97-1CF54CF0A0D7}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
