@@ -5,6 +5,10 @@ using GTM = Gadgeteer.Modules;
 
 namespace MeteoRitBoard
 {
+    using MeteoRitBoard.Controllers;
+    using MeteoRitBoard.Networking;
+    using MeteoRitBoard.REST;
+
     public partial class Program
     {
         // This method is run when the mainboard is powered up or reset.   
@@ -26,6 +30,19 @@ namespace MeteoRitBoard
 
             // Use Debug.Print to show messages in Visual Studio's "Output" window during debugging.
             Debug.Print("Program Started");
+            NetworkHelper.PrintLocalAddress();
+
+            var restClient = new RestClient(Configuration.Configuration.ServerAddress);
+            var barometerController = new BarometerController(this.barometer);
+            
+            barometerController.NewSensorData +=
+                (sender, args) => restClient.SendSensorData(args.Type, args.Value);
+            barometerController.Start(SensorConfiguration.DefaultMeasureInterval);
+
+            var temperatureHumidityController = new TemperatureHumidityController(this.temperatureHumidity);
+            temperatureHumidityController.NewSensorData +=
+                (sender, args) => restClient.SendSensorData(args.Type, args.Value);
+            temperatureHumidityController.Start(SensorConfiguration.DefaultMeasureInterval);
         }
     }
 }

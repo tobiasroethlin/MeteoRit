@@ -39,6 +39,16 @@
   <!-- Everything below here is custom to .NET MF / Gadgeteer template-->
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Controllers\BarometerController.cs" />
+    <Compile Include="Controllers\ISensorController.cs" />
+    <Compile Include="Controllers\MeasurementEventArgs.cs" />
+    <Compile Include="Controllers\SensorConfiguration.cs" />
+    <Compile Include="Controllers\SensorDataEventArgs.cs" />
+    <Compile Include="Controllers\TemperatureHumidityController.cs" />
+    <Compile Include="Networking\NetworkHelper.cs" />
+    <Compile Include="REST\IRestClient.cs" />
+    <Compile Include="REST\RestClient.cs" />
     <Compile Include="Program.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -54,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />
+    <Reference Include="Gadgeteer.WebClient, Version=2.42.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="GHIElectronics.Gadgeteer.FEZCerberus, Version=4.2.102.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -66,12 +77,16 @@
     <Reference Include="GTM.Seeed.TemperatureHumidity, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Json.NetMF">
+      <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf42\Json.NetMF.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
     <Reference Include="Microsoft.SPOT.TinyCore" />
     <Reference Include="mscorlib" />
+    <Reference Include="System" />
     <Reference Include="System.IO" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +97,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Program.gadgeteer">
       <Generator>GadgeteerFileCodeGenerator</Generator>
       <LastGenOutput>Program.generated.cs</LastGenOutput>
@@ -92,4 +108,5 @@
     <None Include="Resources\NinaB.tinyfnt" />
     <None Include="Resources\small.tinyfnt" />
   </ItemGroup>
+  <ItemGroup />
 </Project>
