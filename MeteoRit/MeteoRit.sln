@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms", "XamarinForm
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.iOS", "XamarinForms\XamarinForms.iOS\XamarinForms.iOS.csproj", "{4FBC9007-788A-42FF-8BB9-E8DE6A233E75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Android", "XamarinForms\XamarinForms.Android\XamarinForms.Android.csproj", "{B6979E99-BE43-4D9C-AB35-7A46F6560312}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\..\..\..\Users\lukasgmuer\Documents\Projects\Common\Common\Common.csproj", "{70E2C640-3F26-4E65-A537-66992C91A87B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{70E2C640-3F26-4E65-A537-66992C91A87B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.WinPhone", "XamarinForms\XamarinForms.WinPhone\XamarinForms.WinPhone.csproj", "{E6A64750-EC3F-4CFD-AD17-FE10129373C7}"
 EndProject
