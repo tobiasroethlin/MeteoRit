@@ -1,14 +1,14 @@
 package ch.bbv.meteorit.bean;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import ch.bbv.meteorit.entities.Measurement;
 import ch.bbv.meteorit.rest.DataPointFacadeREST;
@@ -16,82 +16,52 @@ import ch.bbv.meteorit.rest.DataPointFacadeREST;
 @Singleton
 public class Persistence {
 
-	private static Logger LOG = Logger.getLogger(DataPointFacadeREST.class.getName());
+	private static Logger LOG = Logger.getLogger(DataPointFacadeREST.class
+			.getName());
 
-	private Map<Integer, Map<Long, Measurement>> measurements = new HashMap<>();
+	@PersistenceContext
+	private EntityManager em;
 
 	public void updateMeasurement(DataPoint value) {
-		long timestamp = DateTime.now().getMillis() / 1000;
-		LOG.info("datapoint: " + timestamp + ", id: " + value.getId() + ", type: " + value.getType() + ", vallue: "
+		Date timestamp = new Date(DateTimeZone.getDefault().convertUTCToLocal(
+				new Date().getTime()));
+		LOG.info("datapoint: " + timestamp.toString() + ", id: "
+				+ value.getId() + ", type: " + value.getType() + ", vallue: "
 				+ value.getValue());
-		if (!measurements.containsKey(value.getId())) {
-			measurements.put(value.getId(), new TreeMap<Long, Measurement>(Collections.reverseOrder()));
+		List<Measurement> measurements = em
+				.createNamedQuery("Measurement.findBySensorIdAndTimestamp",
+						Measurement.class).setParameter("sensorId", 14)
+				.setParameter("timestamp", timestamp).getResultList();
+		if (measurements.size() > 0) {
+			Measurement measurement = measurements.get(0);
+			measurement.updateMeasurements(value, timestamp);
+			em.merge(measurement);
+		} else {
+			Measurement measurement = new Measurement();
+			measurement.updateMeasurements(value, timestamp);
+			em.persist(measurement);
 		}
-		Map<Long, Measurement> timestampMap = measurements.get(value.getId());
-		if (!timestampMap.containsKey(timestamp)) {
-			timestampMap.put(timestamp, new Measurement());
-		}
-		measurements.get(value.getId()).get(timestamp).updateMeasurements(value, timestamp);
 	}
 
-	public Measurement getMeasurement(int id, long timestamp) {
-		Map<Long, Measurement> timestampMap = measurements.get(id);
-		if (timestampMap != null) {
-			Measurement measurement = timestampMap.get(timestamp);
-			if (measurement != null) {
-				return measurement;
-			}
+	public Measurement getMeasurement(int sensorId, long timestamp) {
+		List<Measurement> measurement = em
+				.createNamedQuery("Measurement.findLatestBySensorIdAndTimestamp",
+						Measurement.class).setParameter("sensorId", sensorId)
+				.setParameter("timestamp", new Date(timestamp)).getResultList();
+		if (measurement.size() > 0) {
+			return measurement.get(0);
 		}
 		return new Measurement();
 	}
 
-	public Measurement getMeasurement(int id) {
-		Map<Long, Measurement> timestampMap = measurements.get(id);
-		if (timestampMap != null) {
-			return timestampMap.values().iterator().next();
+	public Measurement getMeasurement(int sensorId) {
+		List<Measurement> measurement = em
+				.createNamedQuery("Measurement.findBySensorId",
+						Measurement.class).setParameter("sensorId", sensorId)
+				.getResultList();
+		if (measurement.size() > 0) {
+			return measurement.get(0);
 		}
 		return new Measurement();
-	}
-
-	private class KeyObject {
-		int id;
-		long timestamp;
-
-		public KeyObject(int id, long timestamp) {
-			this.id = id;
-			this.timestamp = timestamp;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + getOuterType().hashCode();
-			result = prime * result + id;
-			result = prime * result + (int) (timestamp ^ (timestamp >>> 32));
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			KeyObject other = (KeyObject) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
-			if (id != other.id)
-				return false;
-			if (timestamp != other.timestamp)
-				return false;
-			return true;
-		}
-
-		private Persistence getOuterType() {
-			return Persistence.this;
-		}
 	}
 }
