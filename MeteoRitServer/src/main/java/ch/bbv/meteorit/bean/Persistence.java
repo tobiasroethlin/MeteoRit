@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 
 import org.joda.time.DateTimeZone;
 
+import ch.bbv.meteorit.entities.City;
 import ch.bbv.meteorit.entities.Measurement;
 import ch.bbv.meteorit.rest.DataPointFacadeREST;
 
@@ -28,6 +29,11 @@ public class Persistence {
 		LOG.info("datapoint: " + timestamp.toString() + ", id: "
 				+ value.getId() + ", type: " + value.getType() + ", vallue: "
 				+ value.getValue());
+		List<City> resultList = em.createNamedQuery("City.findBySensorId", City.class).setParameter("sensorId", value.getId()).getResultList();
+		String cityName = "";
+		if (!resultList.isEmpty()) {
+			cityName = resultList.get(0).getCityName();
+		}
 		List<Measurement> measurements = em
 				.createNamedQuery("Measurement.findBySensorIdAndTimestamp",
 						Measurement.class).setParameter("sensorId", 14)
@@ -35,10 +41,12 @@ public class Persistence {
 		if (measurements.size() > 0) {
 			Measurement measurement = measurements.get(0);
 			measurement.updateMeasurements(value, timestamp);
+			measurement.setCityName(cityName);
 			em.merge(measurement);
 		} else {
 			Measurement measurement = new Measurement();
 			measurement.updateMeasurements(value, timestamp);
+			measurement.setCityName(cityName);
 			em.persist(measurement);
 		}
 	}

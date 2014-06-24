@@ -107,7 +107,6 @@ public class Measurement {
 	public void updateMeasurements(DataPoint value, Date timestamp) {
 		this.timestamp = timestamp;
 		this.sensorId = value.getId();
-		this.cityName = "Davos";
 		if ("Pressure".equals(value.getType())) {
 			this.pressure = value.getValue();
 		} else if ("Temperature".equals(value.getType())) {
