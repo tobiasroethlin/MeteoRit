@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using Common;
+using XamarinCore;
 
 namespace MeteoRitRichClient
 {
@@ -22,6 +11,8 @@ namespace MeteoRitRichClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Measurement measurement;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,12 +20,26 @@ namespace MeteoRitRichClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             var sc = new ServiceCaller();
-            var request = sc.CreateRequest("http://192.168.1.71:8080/MeteoRit/REST/measurement", IdTextBox.Text, TimestampTextBox.Text);
-            var measurement = sc.GetMeasurement(request);
+            var request = sc.CreateRequest(IdTextBox.Text, TimestampTextBox.Text);
+            sc.measureEvent += ScOnMeasureEvent;
+            sc.GetMeasurement(request);
+        }
+
+        private void ScOnMeasureEvent(object sender)
+        {
+            
+            this.measurement = (Measurement)sender;
+            this.Dispatcher.Invoke(Method);
+        }
+
+        private void  Method()
+        {
             TempTextBox.Text = measurement.Temperature.ToString();
             HumidityTextBox.Text = measurement.Humidity.ToString();
             PressureTextBox.Text = measurement.Pressure.ToString();
         }
+        
     }
 }

@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
@@ -61,8 +62,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Measurement.cs" />
-    <Compile Include="ServiceCaller.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,6 +104,16 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Users\lukasgmuer\Documents\Projects\Common\Common\Common.csproj">
+      <Project>{70E2C640-3F26-4E65-A537-66992C91A87B}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamarinCore\XamarinCore.csproj">
+      <Project>{747706F4-ECBF-4D50-8D72-B0DDCC18395C}</Project>
+      <Name>XamarinCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
