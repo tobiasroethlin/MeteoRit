@@ -13,7 +13,7 @@ namespace MeteorServer
 
         static void Main(string[] args)
         {
-            Uri baseAddress = new Uri("http://localhost:8732/service");
+            Uri baseAddress = new Uri("http://localhost:8734/service");
 
             // Create the ServiceHost.
             using (ServiceHost host = new ServiceHost(typeof(RestService), baseAddress))
@@ -21,10 +21,17 @@ namespace MeteorServer
                 // Enable metadata publishing.
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
                 smb.HttpGetEnabled = true;
-                smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
+                smb.MetadataExporter.PolicyVersion = PolicyVersion.Default;
                 host.Description.Behaviors.Add(smb);
 
+                host.AddServiceEndpoint("MeteorServer.IRestService", new BasicHttpBinding(),
+                    new Uri(baseAddress, "service2"));
+
+
+                
                 host.AddDefaultEndpoints();
+
+
                 // Open the ServiceHost to start listening for messages. Since
                 // no endpoints are explicitly configured, the runtime will create
                 // one endpoint per base address for each service contract implemented
