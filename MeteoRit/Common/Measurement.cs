@@ -1,8 +1,7 @@
 using System;
 
-namespace MeteoRitRichClient
+namespace Common
 {
-    [Serializable]
     public class Measurement
     {
         public int Id { get; set; }
