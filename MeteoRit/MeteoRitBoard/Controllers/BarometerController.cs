@@ -4,16 +4,26 @@ namespace MeteoRitBoard.Controllers
 
     using Gadgeteer.Modules.Seeed;
 
+    using Microsoft.SPOT;
+
     public class BarometerController : ISensorController
     {
         private readonly Barometer barometer;
+
+        public event SensorDataEventHandler NewSensorData;
 
         public BarometerController(Barometer barometer)
         {
             this.barometer = barometer;
         }
 
-        public event SensorDataEventHandler NewSensorData;
+        public string SensorName
+        {
+            get
+            {
+                return "barometer";
+            }
+        }
 
         public void RequestMeasurement()
         {
@@ -22,6 +32,7 @@ namespace MeteoRitBoard.Controllers
 
         public void Start(TimeSpan interval)
         {
+            Debug.Print("Starting " + this.SensorName);
             this.barometer.ContinuousMeasurementInterval = interval;
             this.barometer.MeasurementComplete += this.OnMeasurementComplete;
             this.barometer.StartContinuousMeasurements();
@@ -29,6 +40,7 @@ namespace MeteoRitBoard.Controllers
 
         public void Stop()
         {
+            Debug.Print("Stopping " + this.SensorName);
             this.barometer.StopContinuousMeasurements();
             this.barometer.MeasurementComplete -= this.OnMeasurementComplete;
         }

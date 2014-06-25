@@ -8,6 +8,8 @@
     {
         event SensorDataEventHandler NewSensorData;
 
+        string SensorName { get; }
+
         void RequestMeasurement();
 
         void Start(TimeSpan interval);
