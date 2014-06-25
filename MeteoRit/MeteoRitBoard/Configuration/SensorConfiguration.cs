@@ -1,4 +1,4 @@
-﻿namespace MeteoRitBoard.Controllers
+namespace MeteoRitBoard.Configuration
 {
     using System;
 

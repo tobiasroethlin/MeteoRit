@@ -41,11 +41,10 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Configuration\ISensorConfigurationManager.cs" />
+    <Compile Include="Configuration\SensorConfiguration.cs" />
     <Compile Include="Networking\NetworkConfiguration.cs" />
     <Compile Include="Controllers\BarometerController.cs" />
     <Compile Include="Controllers\ISensorController.cs" />
-    <Compile Include="Controllers\MeasurementEventArgs.cs" />
-    <Compile Include="Controllers\SensorConfiguration.cs" />
     <Compile Include="Controllers\SensorDataEventArgs.cs" />
     <Compile Include="Controllers\TemperatureHumidityController.cs" />
     <Compile Include="Networking\NetworkHelper.cs" />

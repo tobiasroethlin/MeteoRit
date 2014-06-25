@@ -2,6 +2,7 @@
 {
     using Gadgeteer.Networking;
 
+    using MeteoRitBoard.Configuration;
     using MeteoRitBoard.Controllers;
 
     public class SensorCommandListener : ISensorCommandListener
