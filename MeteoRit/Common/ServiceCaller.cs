@@ -1,9 +1,7 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace Common
 {
@@ -20,6 +18,27 @@ namespace Common
             request.ContentType = "application/json; charset=utf-8";
 
             return request;
+        }
+
+        public async Task<Measurement> GetMeasurement(string id, string timestamp)
+        {
+            string URI = "http://192.168.1.71:8080/meteorit/REST/measurement";
+            Uri serviceEndPoint;
+            if (!string.IsNullOrEmpty(timestamp))
+            {
+                serviceEndPoint = new Uri(URI + "/" + Id + "/" + timestamp + "/");
+            }
+            else
+            {
+                serviceEndPoint = new Uri(URI + "/" + Id + "/");
+            }
+            using (var httpClient = new System.Net.HttpClient())
+            {
+                var response = await httpClient.GetAsync(serviceEndPoint).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Measurement>().ConfigureAwait(false);
+            }
         }
     
         public HttpWebRequest CreateRequest(string Id, string timestamp)
