@@ -1,6 +1,6 @@
-package ch.bbv.meteorit.persistence.couchbase;
+package ch.bbv.meteorit.entities;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -8,14 +8,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 import ch.bbv.meteorit.bean.DataPoint;
 
 @XmlRootElement
-public class Measurement {
+public class Measurement implements Serializable {
 
+	private static final long serialVersionUID = 4835981952244463678L;
+	
 	@XmlElement(name = "Id")
 	private int id;
 	@XmlElement(name = "CityName")
 	private String cityName;
 	@XmlElement(name = "Timestamp")
-	private Date timestamp;
+	private long timestamp;
 	@XmlElement(name = "Temperature")
 	private double temperature;
 	@XmlElement(name = "Pressure")
@@ -39,11 +41,11 @@ public class Measurement {
 		this.cityName = cityName;
 	}
 
-	public Date getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -71,7 +73,7 @@ public class Measurement {
 		this.humidity = humidity;
 	}
 
-	public void updateMeasurements(DataPoint value, Date timestamp) {
+	public void updateMeasurements(DataPoint value, long timestamp) {
 		this.timestamp = timestamp;
 		this.id = value.getId();
 		if ("Pressure".equals(value.getType())) {

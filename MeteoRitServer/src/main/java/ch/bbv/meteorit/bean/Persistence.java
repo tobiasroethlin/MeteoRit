@@ -1,6 +1,6 @@
 package ch.bbv.meteorit.bean;
 
-import ch.bbv.meteorit.persistence.db.Measurement;
+import ch.bbv.meteorit.entities.Measurement;
 
 public interface Persistence {
 

@@ -1,7 +1,5 @@
 package ch.bbv.meteorit.persistence.db;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,17 +14,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import ch.bbv.meteorit.bean.DataPoint;
+import ch.bbv.meteorit.entities.Measurement;
 
 @Entity
 @XmlRootElement
 @NamedQueries({
-		@NamedQuery(name = "Measurement.findAll", query = "SELECT a FROM Measurement a ORDER BY a.timestamp"),
-		@NamedQuery(name = "Measurement.findById", query = "SELECT a FROM Measurement a WHERE a.id = :id ORDER BY a.timestamp DESC"),
-		@NamedQuery(name = "Measurement.findBySensorId", query = "SELECT a FROM Measurement a WHERE a.sensorId = :sensorId ORDER BY a.timestamp DESC"),
-		@NamedQuery(name = "Measurement.findLatestBySensorIdAndTimestamp", query = "SELECT a FROM Measurement a WHERE a.sensorId = :sensorId and a.timestamp <= :timestamp ORDER BY a.timestamp DESC"),
-		@NamedQuery(name = "Measurement.findBySensorIdAndTimestamp", query = "SELECT a FROM Measurement a WHERE a.sensorId = :sensorId and a.timestamp = :timestamp") })
+		@NamedQuery(name = "MeasurementEntity.findAll", query = "SELECT a FROM MeasurementEntity a ORDER BY a.timestamp"),
+		@NamedQuery(name = "MeasurementEntity.findById", query = "SELECT a FROM MeasurementEntity a WHERE a.id = :id ORDER BY a.timestamp DESC"),
+		@NamedQuery(name = "MeasurementEntity.findBySensorId", query = "SELECT a FROM MeasurementEntity a WHERE a.sensorId = :sensorId ORDER BY a.timestamp DESC"),
+		@NamedQuery(name = "MeasurementEntity.findLatestBySensorIdAndTimestamp", query = "SELECT a FROM MeasurementEntity a WHERE a.sensorId = :sensorId and a.timestamp <= :timestamp ORDER BY a.timestamp DESC"),
+		@NamedQuery(name = "MeasurementEntity.findBySensorIdAndTimestamp", query = "SELECT a FROM MeasurementEntity a WHERE a.sensorId = :sensorId and a.timestamp = :timestamp") })
 @Table(indexes = { @Index(columnList = "timestamp, sensorId", unique = false) })
-public class Measurement {
+public class MeasurementEntity {
 
 	@Id
 	@NotNull
@@ -114,6 +113,17 @@ public class Measurement {
 		} else if ("Humidity".equals(value.getType())) {
 			this.humidity = value.getValue().intValue();
 		}
+	}
+	
+	public Measurement getMeasurement() {
+		Measurement measurement = new Measurement();
+		measurement.setCityName(cityName);
+		measurement.setHumidity(humidity);
+		measurement.setPressure(pressure);
+		measurement.setTemperature(temperature);
+		measurement.setTimestamp(timestamp);
+		measurement.setId(sensorId);
+		return measurement;
 	}
 
 }
