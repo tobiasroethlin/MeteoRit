@@ -8,7 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import ch.bbv.meteorit.bean.Persistence;
-import ch.bbv.meteorit.entities.Measurement;
+import ch.bbv.meteorit.persistence.db.Measurement;
 
 @Stateless
 @Path("measurement")

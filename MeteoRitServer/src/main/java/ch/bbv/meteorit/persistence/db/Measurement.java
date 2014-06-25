@@ -1,4 +1,4 @@
-package ch.bbv.meteorit.entities;
+package ch.bbv.meteorit.persistence.db;
 
 import java.util.Date;
 

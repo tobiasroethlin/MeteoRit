@@ -1,4 +1,4 @@
-package ch.bbv.meteorit.bean;
+package ch.bbv.meteorit.persistence.db;
 
 import java.util.Date;
 import java.util.List;
@@ -10,8 +10,9 @@ import javax.persistence.PersistenceContext;
 
 import org.joda.time.DateTimeZone;
 
+import ch.bbv.meteorit.bean.DataPoint;
+import ch.bbv.meteorit.bean.Persistence;
 import ch.bbv.meteorit.entities.City;
-import ch.bbv.meteorit.entities.Measurement;
 import ch.bbv.meteorit.rest.DataPointFacadeREST;
 
 @Singleton

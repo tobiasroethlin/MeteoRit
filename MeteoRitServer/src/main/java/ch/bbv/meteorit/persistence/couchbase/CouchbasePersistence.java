@@ -1,4 +1,4 @@
-package ch.bbv.meteorit.bean;
+package ch.bbv.meteorit.persistence.couchbase;
 
 import java.io.IOException;
 import java.net.URI;
@@ -8,7 +8,9 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
-import ch.bbv.meteorit.entities.Measurement;
+import ch.bbv.meteorit.bean.DataPoint;
+import ch.bbv.meteorit.bean.Persistence;
+import ch.bbv.meteorit.persistence.db.Measurement;
 
 import com.couchbase.client.CouchbaseClient;
 
