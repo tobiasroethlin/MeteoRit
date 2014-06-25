@@ -106,7 +106,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Users\lukasgmuer\Documents\Projects\Common\Common\Common.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{70E2C640-3F26-4E65-A537-66992C91A87B}</Project>
       <Name>Common</Name>
     </ProjectReference>
