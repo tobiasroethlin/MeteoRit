@@ -3,6 +3,7 @@ package ch.bbv.meteorit.persistence.couchbase;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -75,7 +76,8 @@ public class CouchbasePersistence implements Persistence {
 		Date ts = new Date(DateTimeZone.getDefault().convertUTCToLocal(
 				new Date().getTime()));
 		long timestamp = ts.getTime() / 1000;
-		LOG.info("datapoint: " + timestamp + ", id: " + value.getId()
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSSZ");
+		LOG.info("datapoint Couchbase: " + format.format(ts) + ", id: " + value.getId()
 				+ ", type: " + value.getType() + ", vallue: "
 				+ value.getValue());
 		List<City> resultList = em
@@ -90,7 +92,9 @@ public class CouchbasePersistence implements Persistence {
 		Measurement measurement = new Measurement();
 		measurement.updateMeasurements(value, timestamp);
 		measurement.setCityName(cityName);
+		updateMeasurement(measurement);
 		client.set(couchbaseKey, new Gson().toJson(measurement));
+		updateLocalstore(measurement);
 	}
 
 	@Override
