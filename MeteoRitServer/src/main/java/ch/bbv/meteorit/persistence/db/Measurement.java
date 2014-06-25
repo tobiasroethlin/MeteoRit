@@ -40,7 +40,7 @@ public class Measurement {
 	@XmlElement(name = "CityName")
 	private String cityName;
 	@XmlElement(name = "Timestamp")
-	private Date timestamp;
+	private long timestamp;
 	@XmlElement(name = "Temperature")
 	private double temperature;
 	@XmlElement(name = "Pressure")
@@ -72,11 +72,11 @@ public class Measurement {
 		this.cityName = cityName;
 	}
 
-	public Date getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -104,7 +104,7 @@ public class Measurement {
 		this.humidity = humidity;
 	}
 
-	public void updateMeasurements(DataPoint value, Date timestamp) {
+	public void updateMeasurements(DataPoint value, long timestamp) {
 		this.timestamp = timestamp;
 		this.sensorId = value.getId();
 		if ("Pressure".equals(value.getType())) {

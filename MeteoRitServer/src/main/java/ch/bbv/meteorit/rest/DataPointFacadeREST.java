@@ -7,14 +7,14 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 import ch.bbv.meteorit.bean.DataPoint;
-import ch.bbv.meteorit.bean.Persistence;
+import ch.bbv.meteorit.persistence.db.DBPersistence;
 
 @Stateless
 @Path("datapoint")
 public class DataPointFacadeREST {
 
 	@Inject
-	Persistence persistence;
+	DBPersistence persistence;
 
 	@POST
 	@Consumes({ "application/json" })

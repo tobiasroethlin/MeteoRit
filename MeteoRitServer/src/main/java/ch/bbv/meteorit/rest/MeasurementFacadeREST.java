@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import ch.bbv.meteorit.bean.Persistence;
+import ch.bbv.meteorit.persistence.db.DBPersistence;
 import ch.bbv.meteorit.persistence.db.Measurement;
 
 @Stateless
@@ -15,7 +15,7 @@ import ch.bbv.meteorit.persistence.db.Measurement;
 public class MeasurementFacadeREST {
 
 	@Inject
-	private Persistence persistence;
+	private DBPersistence persistence;
 
 	@GET
 	@Path("{id}/{timestamp}")

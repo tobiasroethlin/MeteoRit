@@ -1,5 +1,6 @@
 package ch.bbv.meteorit.persistence.db;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -28,8 +29,9 @@ public class DBPersistence implements Persistence {
 	public void updateMeasurement(DataPoint value) {
 		Date timestamp = new Date(DateTimeZone.getDefault().convertUTCToLocal(
 				new Date().getTime()));
-		LOG.info("datapoint: " + timestamp.toString() + ", id: "
-				+ value.getId() + ", type: " + value.getType() + ", vallue: "
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSSZ");
+		LOG.info("datapoint: " + format.format(timestamp) + ", id: "
+				+ value.getId() + ", type: " + value.getType() + ", value: "
 				+ value.getValue());
 		List<City> resultList = em.createNamedQuery("City.findBySensorId", City.class).setParameter("sensorId", value.getId()).getResultList();
 		String cityName = "";
@@ -39,15 +41,15 @@ public class DBPersistence implements Persistence {
 		List<Measurement> measurements = em
 				.createNamedQuery("Measurement.findBySensorIdAndTimestamp",
 						Measurement.class).setParameter("sensorId", 14)
-				.setParameter("timestamp", timestamp).getResultList();
+				.setParameter("timestamp", timestamp.getTime()).getResultList();
 		if (measurements.size() > 0) {
 			Measurement measurement = measurements.get(0);
-			measurement.updateMeasurements(value, timestamp);
+			measurement.updateMeasurements(value, timestamp.getTime());
 			measurement.setCityName(cityName);
 			em.merge(measurement);
 		} else {
 			Measurement measurement = new Measurement();
-			measurement.updateMeasurements(value, timestamp);
+			measurement.updateMeasurements(value, timestamp.getTime());
 			measurement.setCityName(cityName);
 			em.persist(measurement);
 		}
@@ -55,12 +57,12 @@ public class DBPersistence implements Persistence {
 
 	@Override
 	public Measurement getMeasurement(int sensorId, long timestamp) {
-		List<Measurement> measurement = em
+		List<Measurement> measurements = em
 				.createNamedQuery("Measurement.findLatestBySensorIdAndTimestamp",
 						Measurement.class).setParameter("sensorId", sensorId)
 				.setParameter("timestamp", new Date(timestamp)).getResultList();
-		if (measurement.size() > 0) {
-			return measurement.get(0);
+		if (measurements.size() > 0) {
+			return measurements.get(0);
 		}
 		return new Measurement();
 	}
