@@ -19,6 +19,11 @@
                 <Rectangle />
                 <TextBox x:Name="PressureTextBox"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <Label Content="Timestamp"/>
+                <Rectangle />
+                <TextBox x:Name="Timestamp2TextBox"/>
+            </StackPanel>
         </StackPanel>
         
         <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
