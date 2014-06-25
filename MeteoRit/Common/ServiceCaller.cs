@@ -9,7 +9,19 @@ namespace Common
 {
     public class ServiceCaller
     {
-        public Measurement Measurement;
+        public HttpWebRequest CreateCityRequest()
+        {
+            string URI = "http://192.168.1.71:9080/meteorit/REST/city/all";
+            Uri serviceEndPoint;
+            
+            serviceEndPoint = new Uri(URI);
+           
+            HttpWebRequest request = WebRequest.CreateHttp(serviceEndPoint);
+            request.ContentType = "application/json; charset=utf-8";
+
+            return request;
+        }
+    
         public HttpWebRequest CreateRequest(string Id, string timestamp)
         {
             string URI = "http://192.168.1.71:8080/meteorit/REST/measurement";
@@ -23,32 +35,30 @@ namespace Common
                 serviceEndPoint = new Uri(URI + "/" + Id + "/");
             }
 
-            HttpWebRequest request = WebRequest.CreateHttp(serviceEndPoint);
-            request.ContentType = "application/json; charset=utf-8";
-
+            HttpWebRequest request = HttpWebRequest.CreateHttp(serviceEndPoint);
+            request.ContentType = "application/json";
+            request.Method = "GET";
+            
             return request;
         }
         
         public event MeasureEvent measureEvent;
 
-        public void GetMeasurement(HttpWebRequest httpReq)
+        public void GetMeasurement<T>(HttpWebRequest httpReq)
         {
-            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Measurement));
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(T));
 
             httpReq.BeginGetResponse ((ar) => 
             {
                var request = (HttpWebRequest)ar.AsyncState;
-                WaitHandle.WaitAll(new[] {ar.AsyncWaitHandle});
                using (var response = (HttpWebResponse)request.EndGetResponse(ar))
                     {       
                           var s = response.GetResponseStream();
-                          this.Measurement = (Measurement)jsonSerializer.ReadObject(s);
-                          this.measureEvent(Measurement); 
+                          var obj = (T)jsonSerializer.ReadObject(s);
+                          this.measureEvent(obj); 
                     }}, 
                     httpReq);
-            
         }
-
     }
 
     public delegate void MeasureEvent(object sender);
