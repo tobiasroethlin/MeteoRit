@@ -39,7 +39,7 @@
   <!-- Everything below here is custom to .NET MF / Gadgeteer template-->
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Networking\NetworkConfiguration.cs" />
     <Compile Include="Controllers\BarometerController.cs" />
     <Compile Include="Controllers\ISensorController.cs" />
     <Compile Include="Controllers\MeasurementEventArgs.cs" />
@@ -61,10 +61,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Configuration\SensorConfigurationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />
     <Reference Include="Gadgeteer.WebClient, Version=2.42.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Gadgeteer.WebServer, Version=2.42.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="GHIElectronics.Gadgeteer.FEZCerberus, Version=4.2.102.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
