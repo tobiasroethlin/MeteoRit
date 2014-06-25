@@ -28,7 +28,7 @@ public class DBPersistence implements Persistence {
 	@Override
 	public void updateMeasurement(DataPoint value) {
 		Date timestamp = new Date(DateTimeZone.getDefault().convertUTCToLocal(
-				new Date().getTime()));
+				new Date().getTime())/1000);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSSZ");
 		LOG.info("datapoint: " + format.format(timestamp) + ", id: "
 				+ value.getId() + ", type: " + value.getType() + ", value: "
