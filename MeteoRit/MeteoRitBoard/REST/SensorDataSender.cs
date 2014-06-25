@@ -7,13 +7,13 @@
 
     using Microsoft.SPOT;
 
-    public class RestClient : IRestClient
+    public class SensorDataSender : ISensorDataSender
     {
         private const string MimeJson = "application/json";
 
         private readonly string address;
 
-        public RestClient(string address)
+        public SensorDataSender(string address)
         {
             this.address = address;
         }

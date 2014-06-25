@@ -11,12 +11,20 @@
 
         private Timer timer;
 
+        public event SensorDataEventHandler NewSensorData;
+
         public TemperatureHumidityController(TemperatureHumidity temperatureHumidity)
         {
             this.temperatureHumidity = temperatureHumidity;
         }
 
-        public event SensorDataEventHandler NewSensorData;
+        public string SensorName
+        {
+            get
+            {
+                return "temperature";
+            }
+        }
 
         public void RequestMeasurement()
         {
@@ -28,7 +36,6 @@
             this.temperatureHumidity.MeasurementComplete += this.OnMeasurementComplete;
             timer = new Timer(interval);
             timer.Tick += OnRequestMeasurement;
-
         }
 
         public void Stop()

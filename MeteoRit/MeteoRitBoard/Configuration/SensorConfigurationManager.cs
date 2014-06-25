@@ -5,9 +5,8 @@
     using Gadgeteer.Networking;
 
     using MeteoRitBoard.Controllers;
-    using MeteoRitBoard.Networking;
 
-    public class SensorConfigurationManager
+    public class SensorConfigurationManager : ISensorConfigurationManager
     {
         private const string ConfigurePath = "configure";
 
@@ -15,22 +14,15 @@
 
         public SensorConfigurationManager()
         {
-            this.SensorConfiguration = new SensorConfiguration(SensorConfiguration.DefaultMeasureInterval);
+            this.SensorConfiguration = new SensorConfiguration(SensorConfiguration.DefaultMeasuringInterval);
         }
 
-        public SensorConfiguration SensorConfiguration { get; set; }
+        public SensorConfiguration SensorConfiguration { get; private set; }
 
-        public void StartListeningForConfiguration()
+        public void ListenForConfigurationChange()
         {
             this.configureEvent = WebServer.SetupWebEvent(ConfigurePath);
             this.configureEvent.WebEventReceived += this.OnConfigureEventReceived;
-            WebServer.StartLocalServer(NetworkConfiguration.LocalAddress, NetworkConfiguration.LocalPort);
-        }
-
-        public void StopListeningForConfiguration()
-        {
-            this.configureEvent.WebEventReceived -= this.OnConfigureEventReceived;
-            WebServer.StopLocalServer();
         }
 
         private void OnConfigureEventReceived(string path, WebServer.HttpMethod method, Responder responder)
@@ -42,6 +34,7 @@
                 if (interval > 0)
                 {
                     this.SensorConfiguration = new SensorConfiguration(new TimeSpan(0, 0, 0, interval));
+                    //TODO throw event
                 }
             }
         }
