@@ -2,13 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 					   x:Class="XamarinForms.Views.MeteoRitView">
-    <Grid>
-      <Grid.RowDefinitions>
-          <Grid.RowDefinition/>
-          <Grid.RowDefinition/>
-      <Grid.RowDefinitions/>
-        
-    </Grid>
-    
-	<Label Text="Hallo" VerticalOptions="Center" HorizontalOptions="Center" />
+    <StackLayout Spacing="10">
+
+        <Label Text="Stop"
+           BackgroundColor="Red"
+           Font="20" />
+
+        <Button Text="Slow down"
+           BackgroundColor="Blue"
+           Font="20"
+           Clicked="UpdateMeteoRitData"/>
+
+        <Label Text="Go"
+           BackgroundColor="Green"
+           Font="20" />
+
+    </StackLayout>
 </ContentPage>
