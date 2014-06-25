@@ -1,31 +1,35 @@
 package ch.bbv.meteorit.entities;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import ch.bbv.meteorit.bean.DataPoint;
 
 @XmlRootElement
-public class Measurement {
+public class Measurement implements Serializable {
 
+	private static final long serialVersionUID = 4835981952244463678L;
+	
 	@XmlElement(name = "Id")
-	private Integer id;
+	private int id;
 	@XmlElement(name = "CityName")
 	private String cityName;
 	@XmlElement(name = "Timestamp")
-	private Long timestamp;
+	private long timestamp;
 	@XmlElement(name = "Temperature")
-	private Double temperature;
+	private double temperature;
 	@XmlElement(name = "Pressure")
-	private Double pressure;
+	private double pressure;
 	@XmlElement(name = "Humidity")
-	private Integer humidity;
+	private int humidity;
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -37,48 +41,47 @@ public class Measurement {
 		this.cityName = cityName;
 	}
 
-	public Long getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Long timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	public Double getTemperature() {
+	public double getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(Double temperature) {
+	public void setTemperature(double temperature) {
 		this.temperature = temperature;
 	}
 
-	public Double getPressure() {
+	public double getPressure() {
 		return pressure;
 	}
 
-	public void setPressure(Double pressure) {
+	public void setPressure(double pressure) {
 		this.pressure = pressure;
 	}
 
-	public Integer getHumidity() {
+	public int getHumidity() {
 		return humidity;
 	}
 
-	public void setHumidity(Integer humidity) {
+	public void setHumidity(int humidity) {
 		this.humidity = humidity;
 	}
 
-	public void updateMeasurements(DataPoint measurement, long timestamp) {
+	public void updateMeasurements(DataPoint value, long timestamp) {
 		this.timestamp = timestamp;
-		this.id = measurement.getId();
-		this.cityName = "Davos";
-		if ("Pressure".equals(measurement.getType())) {
-			this.pressure = measurement.getValue();
-		} else if ("Temperature".equals(measurement.getType())) {
-			this.temperature = measurement.getValue();
-		} else if ("Humidity".equals(measurement.getType())) {
-			this.humidity = measurement.getValue().intValue();
+		this.id = value.getId();
+		if ("Pressure".equals(value.getType())) {
+			this.pressure = value.getValue();
+		} else if ("Temperature".equals(value.getType())) {
+			this.temperature = value.getValue();
+		} else if ("Humidity".equals(value.getType())) {
+			this.humidity = value.getValue().intValue();
 		}
 	}
 
