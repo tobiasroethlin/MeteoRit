@@ -5,6 +5,8 @@
     using Gadgeteer;
     using Gadgeteer.Modules.Seeed;
 
+    using Microsoft.SPOT;
+
     public class TemperatureHumidityController : ISensorController
     {
         private readonly TemperatureHumidity temperatureHumidity;
@@ -33,6 +35,7 @@
 
         public void Start(TimeSpan interval)
         {
+            Debug.Print("Starting " + this.SensorName);
             this.temperatureHumidity.MeasurementComplete += this.OnMeasurementComplete;
             timer = new Timer(interval);
             timer.Tick += OnRequestMeasurement;
@@ -40,6 +43,7 @@
 
         public void Stop()
         {
+            Debug.Print("Stopping " + this.SensorName);
             this.temperatureHumidity.MeasurementComplete -= this.OnMeasurementComplete;
             this.timer.Stop();
         }

@@ -6,6 +6,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeteoRitRichClient", "MeteoRitRichClient\MeteoRitRichClient.csproj", "{501CBA21-B33A-40CB-A227-F026B4FFEDC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms", "XamarinForms\XamarinForms\XamarinForms.csproj", "{F3BA4DBE-C44D-41B8-A2CF-1465234E063A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{70E2C640-3F26-4E65-A537-66992C91A87B} = {70E2C640-3F26-4E65-A537-66992C91A87B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.iOS", "XamarinForms\XamarinForms.iOS\XamarinForms.iOS.csproj", "{4FBC9007-788A-42FF-8BB9-E8DE6A233E75}"
 EndProject

@@ -4,7 +4,7 @@
 
     public class NetworkConfiguration
     {
-        public const string ServerAddress = "http://192.168.1.71:8080/MeteoRit/REST/datapoint/";
+        public const string ServerAddress = "http://192.168.1.71:8080/meteorit/REST/datapoint/";
 
         public static string LocalAddress
         {

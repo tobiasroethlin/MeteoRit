@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace Common
 {
+    using System.Net.Http;
+
+    using RestSharp.Portable;
+
     public class ServiceCaller
     {
         public HttpWebRequest CreateCityRequest()
@@ -22,23 +26,29 @@ namespace Common
 
         public async Task<Measurement> GetMeasurement(string id, string timestamp)
         {
-            string URI = "http://192.168.1.71:8080/meteorit/REST/measurement";
-            Uri serviceEndPoint;
-            if (!string.IsNullOrEmpty(timestamp))
-            {
-                serviceEndPoint = new Uri(URI + "/" + Id + "/" + timestamp + "/");
-            }
-            else
-            {
-                serviceEndPoint = new Uri(URI + "/" + Id + "/");
-            }
-            using (var httpClient = new System.Net.HttpClient())
-            {
-                var response = await httpClient.GetAsync(serviceEndPoint).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
+            var client = new RestClient ("http://192.168.1.71:8080/meteorit/REST/measurement");
 
-                return await response.Content.ReadAsAsync<Measurement>().ConfigureAwait(false);
-            }
+            var request = new RestRequest ("/14/", HttpMethod.Get);
+            Task<IRestResponse<Measurement>> temp = client.Execute<Measurement>(request);
+
+            return null;
+
+//            Uri serviceEndPoint;
+//            if (!string.IsNullOrEmpty(timestamp))
+//            {
+//                serviceEndPoint = new Uri(URI + "/" + id + "/" + timestamp + "/");
+//            }
+//            else
+//            {
+//                serviceEndPoint = new Uri(URI + "/" + id + "/");
+//            }
+//            using (var httpClient = new HttpClient())
+//            {
+//                var response = await httpClient.GetAsync(serviceEndPoint).ConfigureAwait(false);
+//                response.EnsureSuccessStatusCode();
+//
+//                return await response.Content.ReadAsAsync<Measurement>().ConfigureAwait(false);
+//            }
         }
     
         public HttpWebRequest CreateRequest(string Id, string timestamp)
